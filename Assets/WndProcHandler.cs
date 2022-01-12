@@ -4,8 +4,8 @@ using System.Runtime.InteropServices;
 public static class WndProcHandler
 {
 #if !UNITY_EDITOR
-    private const uint WM_INITMENUPOPUP = 0x0117;
-    private const uint  WM_CANCELMODE = 0x001F;
+	private const uint WM_INITMENUPOPUP = 0x0117;
+	private const uint WM_CANCELMODE = 0x001F;
 
 	// SetWindowLongPtr argument : Sets a new address for the window procedure.
 	private const int GWLP_WNDPROC = -4;
@@ -18,9 +18,7 @@ public static class WndProcHandler
 
 	// Instance of delegate
 	private static WndProcDelegate procDelegate;
-
 #endif
-
 
 	public static void Enable(bool bEnable)
 	{
@@ -46,8 +44,8 @@ public static class WndProcHandler
 	}
 
 #if !UNITY_EDITOR
-	private static IntPtr WndProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam){
-		
+	private static IntPtr WndProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam)
+	{
 		if (msg != WM_INITMENUPOPUP)
 			 return DefWindowProc(hWnd, msg, wParam, lParam);
 		else 
@@ -58,15 +56,17 @@ public static class WndProcHandler
 	private static extern IntPtr GetActiveWindow();
 
 	[DllImport("user32.dll", EntryPoint = "CallWindowProcA")]
-	private static extern IntPtr CallWindowProc(IntPtr lpPrevWndFunc, IntPtr hWnd, uint wMsg, IntPtr wParam,
-		IntPtr lParam);
+	private static extern IntPtr CallWindowProc(IntPtr lpPrevWndFunc, IntPtr hWnd, uint wMsg, IntPtr wParam, IntPtr lParam);
 
 	[DllImport("user32.dll", EntryPoint = "DefWindowProcA")]
 	private static extern IntPtr DefWindowProc(IntPtr hWnd, uint wMsg, IntPtr wParam, IntPtr lParam);
 
-	private static IntPtr SetWindowLongPtr(HandleRef hWnd, int nIndex, IntPtr dwNewLong){
-		if (IntPtr.Size == 8) return SetWindowLongPtr64(hWnd, nIndex, dwNewLong);
-		return new IntPtr(SetWindowLong32(hWnd, nIndex, dwNewLong.ToInt32()));
+	private static IntPtr SetWindowLongPtr(HandleRef hWnd, int nIndex, IntPtr dwNewLong)
+	{
+		if (IntPtr.Size == 8) 
+			return SetWindowLongPtr64(hWnd, nIndex, dwNewLong);
+		return 
+			new IntPtr(SetWindowLong32(hWnd, nIndex, dwNewLong.ToInt32()));
 	}
 
 	[DllImport("user32.dll", EntryPoint = "SetWindowLong")]
